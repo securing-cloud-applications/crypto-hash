@@ -21,8 +21,8 @@
   </properties>
 
   <modules>
-    <module>payments</module>
     <module>warehouse</module>
+    <module>payments</module>
   </modules>
 
   <dependencies>
