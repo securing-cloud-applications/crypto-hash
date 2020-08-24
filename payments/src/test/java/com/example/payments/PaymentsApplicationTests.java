@@ -1,10 +1,10 @@
-package com.example.cryptohash;
+package com.example.payments;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CryptoHashApplicationTests {
+class PaymentsApplicationTests {
 
   @Test
   void contextLoads() {}

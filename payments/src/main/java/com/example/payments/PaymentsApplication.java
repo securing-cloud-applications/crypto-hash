@@ -1,12 +1,12 @@
-package com.example.cryptohash;
+package com.example.payments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CryptoHashApplication {
+public class PaymentsApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(CryptoHashApplication.class, args);
+    SpringApplication.run(PaymentsApplication.class, args);
   }
 }
