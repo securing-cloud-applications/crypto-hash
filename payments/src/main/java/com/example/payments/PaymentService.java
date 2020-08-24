@@ -1,6 +1,5 @@
 package com.example.payments;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,13 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentService {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
-
   public void processRefunds(Path refundsFile) {
     if (!isValid(refundsFile)) {
       throw new CorruptRefundFileException();
     }
-
     try {
       System.out.println("Issuing Refund to");
       System.out.println(Files.readString(refundsFile));

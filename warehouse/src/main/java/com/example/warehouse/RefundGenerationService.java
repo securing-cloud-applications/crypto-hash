@@ -29,16 +29,6 @@ public class RefundGenerationService {
     }
   }
 
-  private String computeSha256(Path refundsFile) {
-    try {
-      MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-      byte[] hash = sha256.digest(Files.readAllBytes(refundsFile));
-      return String.valueOf(Hex.encode(hash));
-    } catch (NoSuchAlgorithmException | IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
   private void generateSha256HashFile(Path refundsFile) {
     try {
       var hashValue = computeSha256(refundsFile);
@@ -46,6 +36,16 @@ public class RefundGenerationService {
       Files.writeString(hashFile, hashValue);
     } catch (IOException e) {
       throw new RuntimeException();
+    }
+  }
+
+  private String computeSha256(Path refundsFile) {
+    try {
+      MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+      byte[] hash = sha256.digest(Files.readAllBytes(refundsFile));
+      return String.valueOf(Hex.encode(hash));
+    } catch (NoSuchAlgorithmException | IOException e) {
+      throw new RuntimeException(e);
     }
   }
 }
