@@ -1,32 +1,36 @@
-package com.example.warehouse;
+package com.example.payments;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RefundGenerationService {
+public class PaymentService {
 
-  public void generateReport(Path refundsFile, List<Refund> refunds) {
-    this.generateRefundFile(refundsFile, refunds);
-    this.generateSha256HashFile(refundsFile);
-  }
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-  private void generateRefundFile(Path refundsFile, List<Refund> refunds) {
+  public void processRefunds(Path refundsFile) {
+    if (!isValid(refundsFile)) {
+      throw new CorruptRefundFileException();
+    }
+
     try {
-      var objectMapper = new ObjectMapper();
-      objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-      objectMapper.writeValue(refundsFile.toFile(), refunds);
+      System.out.println("Issuing Refund to");
+      System.out.println(Files.readString(refundsFile));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private boolean isValid(Path refundsFile) {
+    var actualHash = computeSha256(refundsFile);
+    var exceptedHash = readExpectedHash(refundsFile);
+    return actualHash.equals(exceptedHash);
   }
 
   private String computeSha256(Path refundsFile) {
@@ -39,11 +43,10 @@ public class RefundGenerationService {
     }
   }
 
-  private void generateSha256HashFile(Path refundsFile) {
+  private String readExpectedHash(Path refundsFile) {
     try {
-      var hashValue = computeSha256(refundsFile);
       var hashFile = refundsFile.resolveSibling(refundsFile.getFileName() + ".sha256");
-      Files.writeString(hashFile, hashValue);
+      return Files.readString(hashFile);
     } catch (IOException e) {
       throw new RuntimeException();
     }
