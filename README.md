@@ -20,10 +20,10 @@ you can more easily explore the code.
 
 Run the applications in the following order.
 
-* run warehouse to generate the `data/refunds.json` and `data/refunds.json.sha256`
-* run payments to read the `data/refunds.json` and verify its integrity 
+* run `com.example.warehouse.WarehouseApplicationTests` to generate the `data/refunds.json` and `data/refunds.json.sha256`
+* run `com.example.payments.PaymentsApplicationTests` to read the `data/refunds.json` and verify its integrity 
 * edit `data/refunds.json` to simulate corruption. you can add a newline at the end of the file.
-* run payments to get a data corruption exception 
+* run `com.example.payments.PaymentsApplicationTests` to get a data corruption exception 
 
 ## interesting files to look at 
 
