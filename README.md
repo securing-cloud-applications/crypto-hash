@@ -5,7 +5,8 @@ are three sub-projects in this repo.
 
 * utils - contains shared utility classes `CrptoUtils` and `JsonUtils`.  
 * warehouse - generates `data/refunds.json` file, depends on the utils project. 
-* payments -  reads `data/refunds.json` and verifies its integrity using SHA-256, depends on utils.
+* payments -  reads `data/refunds.json` and verifies its integrity using SHA-256, depends 
+on utils project.
 
 ## software prerequisites 
 
@@ -21,8 +22,10 @@ also import the project into your favourite IDE to explore the code.
 
 * run warehouse app `java -jar warehouse/target/warehouse-0.0.1-SNAPSHOT.jar` to generate the 
   `data/refunds.json` and `data/refunds.json.sha256` files
-* run payments app `java -jar payments/target/payments-0.0.1-SNAPSHOT.jar` to red the 
+* run payments app `java -jar payments/target/payments-0.0.1-SNAPSHOT.jar` to read the 
   `data/refunds.json` and verify it's integrity  against  `data/refunds.json.sha256`
+* edit `data/refunds.json` to simulate corruption. you can add a newline at the end of the file.
+* run payments app `java -jar payments/target/payments-0.0.1-SNAPSHOT.jar` you will an exception. 
 
 ## run from the IDE 
 
