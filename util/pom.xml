@@ -9,9 +9,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>utils</artifactId>
+  <artifactId>util</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>utils</name>
+  <name>util</name>
   <description>shared utility classes</description>
 
   <dependencies>

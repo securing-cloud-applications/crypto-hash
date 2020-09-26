@@ -17,7 +17,7 @@
   <dependencies>
     <dependency>
       <groupId>com.example</groupId>
-      <artifactId>utils</artifactId>
+      <artifactId>util</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
