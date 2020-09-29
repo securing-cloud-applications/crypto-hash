@@ -11,20 +11,21 @@ public class PaymentService {
 
   public void processRefunds(Path refundsFile) {
     try {
-      if (!isValid(refundsFile)) {
+      byte[] refunds = Files.readAllBytes(refundsFile);
+      String actualHash = CryptoUtils.sha256(refunds);
+
+      String shaFilename = refundsFile.getFileName() + ".sha256";
+      Path hashFile = refundsFile.resolveSibling(shaFilename);
+      String exceptedHash = Files.readString(hashFile);
+
+      if (!actualHash.equals(exceptedHash)) {
         throw new CorruptRefundFileException();
       }
+
       System.out.println("Issuing Refund to");
       System.out.println(Files.readString(refundsFile));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  private boolean isValid(Path refundsFile) throws IOException {
-    Path hashFile = refundsFile.resolveSibling(refundsFile.getFileName() + ".sha256");
-    String actualHash = CryptoUtils.sha256(Files.readAllBytes(refundsFile));
-    String exceptedHash = Files.readString(hashFile);
-    return actualHash.equals(exceptedHash);
   }
 }

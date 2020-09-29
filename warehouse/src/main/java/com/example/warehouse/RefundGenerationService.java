@@ -13,21 +13,15 @@ public class RefundGenerationService {
 
   public void generateReport(Path refundsFile, List<Refund> refunds) {
     try {
-      this.generateRefundFile(refundsFile, refunds);
-      this.generateSha256HashFile(refundsFile);
+      String refundsJson = JsonUtils.toJson(refunds);
+      Files.writeString(refundsFile, refundsJson);
+      String hashValue = CryptoUtils.sha256(refundsJson.getBytes());
+
+      String shaFilename = refundsFile.getFileName() + ".sha256";
+      Path hashFile = refundsFile.resolveSibling(shaFilename);
+      Files.writeString(hashFile, hashValue);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  private void generateRefundFile(Path refundsFile, List<Refund> refunds) throws IOException {
-    String refundsJson = JsonUtils.toJson(refunds);
-    Files.writeString(refundsFile, refundsJson);
-  }
-
-  private void generateSha256HashFile(Path refundsFile) throws IOException {
-    Path hashFile = refundsFile.resolveSibling(refundsFile.getFileName() + ".sha256");
-    String hashValue = CryptoUtils.sha256(Files.readAllBytes(refundsFile));
-    Files.writeString(hashFile, hashValue);
   }
 }
