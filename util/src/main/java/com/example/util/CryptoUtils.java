@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.security.crypto.codec.Hex;
 
 public class CryptoUtils {
-
   public static String sha256(byte[] input) {
     try {
       MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
